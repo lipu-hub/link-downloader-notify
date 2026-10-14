@@ -20,10 +20,11 @@ if st.button("Download Video", type="primary"):
     try:
       with st.spinner("Downloading video... ⏳"):
         with tempfile.TemporaryDirectory() as tmpdirname:
-          # Yahan 'best' use kiya hai taaki ffmpeg ki zaroorat na pade
+          # Updated format option taaki YouTube bina ffmpeg ke direct download ho jaye
           ydl_opts = {
-              "format": "best",
+              "format": "best[ext=mp4]/best",
               "outtmpl": os.path.join(tmpdirname, "%(title)s.%(ext)s"),
+              "noplaylist": True,
           }
 
           with YoutubeDL(ydl_opts) as ydl:
