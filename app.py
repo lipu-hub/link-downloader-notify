@@ -7,7 +7,7 @@ st.set_page_config(
     page_title="Video Downloader", page_icon="🎬", layout="centered"
 )
 st.title("🎬 Multi-Platform Video Downloader")
-st.caption("YouTube aur other platforms downloader (Android Client Bypass)")
+st.caption("YouTube aur other platforms downloader (TV/Embedded Bypass)")
 
 url = st.text_input(
     "Video ka link paste karein",
@@ -33,10 +33,10 @@ def download_video(link: str, target_dir: str) -> str:
               " (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
           ),
       },
-      # YouTube 403 Forbidden bypass karne ke liye android/mweb client
+      # Cloud server IP block bypass karne ke liye tv_embedded client
       "extractor_args": {
           "youtube": {
-              "player_client": ["android", "mweb"],
+              "player_client": ["tv_embedded", "mweb"],
           }
       },
   }
