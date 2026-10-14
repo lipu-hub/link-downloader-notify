@@ -20,7 +20,6 @@ if st.button("Download Video", type="primary"):
     try:
       with st.spinner("Downloading video... ⏳"):
         with tempfile.TemporaryDirectory() as tmpdirname:
-          # Format option hata diya hai taaki yt-dlp khud default best single file utha le
           ydl_opts = {
               "outtmpl": os.path.join(tmpdirname, "%(title)s.%(ext)s"),
               "noplaylist": True,
@@ -67,7 +66,6 @@ if st.button("Download Video", type="primary"):
     try:
       with st.spinner("Downloading video... ⏳"):
         with tempfile.TemporaryDirectory() as tmpdirname:
-          # Format option hata diya hai taaki yt-dlp khud default best single file utha le
           ydl_opts = {
               "outtmpl": os.path.join(tmpdirname, "%(title)s.%(ext)s"),
               "noplaylist": True,
