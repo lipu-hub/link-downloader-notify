@@ -7,7 +7,7 @@ st.set_page_config(
     page_title="Video Downloader", page_icon="🎬", layout="centered"
 )
 st.title("🎬 Multi-Platform Video Downloader")
-st.caption("YouTube aur other platforms downloader (TV/Embedded Bypass)")
+st.caption("YouTube aur other platforms downloader (Bot Bypass)")
 
 url = st.text_input(
     "Video ka link paste karein",
@@ -29,14 +29,15 @@ def download_video(link: str, target_dir: str) -> str:
       "restrictfilenames": True,
       "http_headers": {
           "User-Agent": (
-              "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
-              " (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
+              "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X)"
+              " AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6"
+              " Mobile/15E148 Safari/604.1"
           ),
       },
-      # Cloud server IP block bypass karne ke liye tv_embedded client
+      # Bot sign-in check bypass karne ke liye ios aur web client
       "extractor_args": {
           "youtube": {
-              "player_client": ["tv_embedded", "mweb"],
+              "player_client": ["ios", "web"],
           }
       },
   }
