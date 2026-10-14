@@ -18,13 +18,11 @@ if st.button("Download Video", type="primary"):
     st.warning("Pehle link toh dalo!")
   else:
     try:
-      with st.spinner("Downloading video in best quality... ⏳"):
-        # Temporary folder mein video download karne ke liye
+      with st.spinner("Downloading video... ⏳"):
         with tempfile.TemporaryDirectory() as tmpdirname:
+          # Yahan 'best' use kiya hai taaki ffmpeg ki zaroorat na pade
           ydl_opts = {
-              "format": (
-                  "bestvideo+bestaudio/best"  # Best quality video + audio merge
-              ),
+              "format": "best",
               "outtmpl": os.path.join(tmpdirname, "%(title)s.%(ext)s"),
           }
 
@@ -32,7 +30,6 @@ if st.button("Download Video", type="primary"):
             info = ydl.extract_info(url, download=True)
             filename = ydl.prepare_filename(info)
 
-          # File read karna
           with open(filename, "rb") as f:
             file_bytes = f.read()
 
@@ -40,7 +37,6 @@ if st.button("Download Video", type="primary"):
 
       st.success(f"Video Ready: **{base_filename}** 🎉")
 
-      # Browser par download button
       st.download_button(
           label="💾 Click here to Save Video to PC",
           data=file_bytes,
@@ -49,6 +45,4 @@ if st.button("Download Video", type="primary"):
       )
 
     except Exception as e:
-      st.error(
-          f"Download fail ho gaya! Ensure link is correct. Error details: {e}"
-      )
+      st.error(f"Download fail ho gaya! Error: {e}")
