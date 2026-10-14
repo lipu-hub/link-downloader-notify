@@ -7,17 +7,13 @@ st.set_page_config(
     page_title="Video Downloader", page_icon="🎬", layout="centered"
 )
 st.title("🎬 Multi-Platform Video Downloader")
-st.caption(
-    "YouTube, Instagram aur anya restricted platforms ke liye (Enhanced Anti-Bot"
-    " Bypass)"
-)
+st.caption("YouTube aur other platforms downloader (Android Client Bypass)")
 
 url = st.text_input(
     "Video ka link paste karein",
-    placeholder="https://www.youtube.com/watch?v=... ya Instagram link",
+    placeholder="https://www.youtube.com/watch?v=...",
 )
 
-# Best progressive stream selector jo bina ffmpeg ke HD/SD video de sake
 FORMAT_SELECTOR = (
     "best[ext=mp4][vcodec!=none][acodec!=none]/best[vcodec!=none][acodec!=none]/best"
 )
@@ -31,20 +27,16 @@ def download_video(link: str, target_dir: str) -> str:
       "quiet": True,
       "no_warnings": True,
       "restrictfilenames": True,
-      # Anti-bot aur restrictions bypass karne ke liye headers aur user-agent
       "http_headers": {
           "User-Agent": (
               "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
-              " (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+              " (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
           ),
-          "Accept": (
-              "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8"
-          ),
-          "Accept-Language": "en-US,en;q=0.5",
       },
+      # YouTube 403 Forbidden bypass karne ke liye android/mweb client
       "extractor_args": {
           "youtube": {
-              "player_client": ["android", "web"],
+              "player_client": ["android", "mweb"],
           }
       },
   }
@@ -66,9 +58,7 @@ if st.button("Download Video", type="primary"):
     st.warning("Pehle ek valid link daalein.")
   else:
     try:
-      with st.spinner(
-          "Video fetch ho raha hai... restrictions bypass ki ja rahi hain ⏳"
-      ):
+      with st.spinner("Video download ho rahi hai... ⏳"):
         with tempfile.TemporaryDirectory() as tmp_dir:
           file_path = download_video(url.strip(), tmp_dir)
 
@@ -83,10 +73,7 @@ if st.button("Download Video", type="primary"):
 
     except yt_dlp.utils.DownloadError as e:
       st.session_state.pop("file_bytes", None)
-      st.error(
-          "Download fail ho gaya. Yeh link restricted, private ya invalid ho"
-          f" sakta hai.\n\nDetail: {e}"
-      )
+      st.error(f"Download fail ho gaya. Detail: {e}")
     except Exception as e:
       st.session_state.pop("file_bytes", None)
       st.error(f"Kuch unexpected error aa gaya: {e}")
